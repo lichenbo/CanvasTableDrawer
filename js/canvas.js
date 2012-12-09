@@ -17,6 +17,15 @@ cxt = document.getElementById("MyCanvas").getContext("2d");
 function drawlabel(x,y,text,size) {
 cxt = document.getElementById("MyCanvas").getContext("2d");
 	cxt.font = size.concat("px Courier");
+	cxt.textAlign = "left";
 	cxt.textBaseline = "top";
 	cxt.fillText(text, x, y);
+}
+function drawtitle(x,y,text,size) {
+	cxt = document.getElementById("MyCanvas").getContext("2d");
+	cxt.font = size.concat("px Courier");
+	cxt.textAlign = "center";
+	cxt.textBaseline = "top";
+	cxt.fillText(text, x, y);
+
 }

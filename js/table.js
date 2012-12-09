@@ -26,6 +26,7 @@ function Cell(value) {
 	this.borderLeft = true;
 	this.borderBottom = true;
 	this.borderRight = true;
+	this.mergeAlign = false;
 	this.width = 0;
 	this.x = 0;
 	this.y = 0;
@@ -49,14 +50,19 @@ function buildCellArray() {
 			if (mergeDown(current_row,current_col)){
 				cellArray[current_row][current_col].borderBottom = false;
 			}
+			if (mergeAlign(current_row,current_col)){
+				cellArray[current_row][current_col].mergeAlign = true;
+			}
 		}
 	}
 }
 function restore(value) {
 	var result = "";
 	result = value.substring((value.indexOf("^") + 1));
-	if (result.indexOf("<-")!=-1)
+	if (result.indexOf("<-") != -1)
 		result = result.substring((result.indexOf("<-")) + 2);
+	if (result.indexOf("->") != -1)
+		result = result.substring(0,result.indexOf("->"));
 	return result;
 }
 function mergeLeft(row,col) {
@@ -77,6 +83,11 @@ function mergeRight(row,col) {
 }
 function mergeDown(row,col) {
 	if (dataArray[row+1]!= null && mergeUp(row+1,col))
+		return true;
+	return false;
+}
+function mergeAlign(row,col) {
+	if (dataArray[row][col].indexOf("->") != -1 && dataArray[row][col+1].indexOf("<-")!=-1)
 		return true;
 	return false;
 }
@@ -121,7 +132,7 @@ function buildRowArray() {
 	for (current_col = 0; dataArray[0][current_col]!= null; current_col = current_col + 1){
 		var max_length = 0;
 		for (current_row = 0; dataArray[current_row]!=null;current_row = current_row + 1) {
-			if (strLen(dataArray[current_row][current_col]) > max_length)
+			if (strLen(cellArray[current_row][current_col].value) > max_length && cellArray[current_row][current_col].mergeAlign == false)
 				max_length = strLen(cellArray[current_row][current_col].value);
 		}
 		rowArray[current_col] = max_length;
@@ -176,7 +187,21 @@ function drawBegin(){
 				drawline(cell.x, cell.y + height, cell.x + getDrawWidth(current_row,current_col), cell.y + height);
 			if (cell.borderRight == true)
 				drawline(cell.x + getDrawWidth(current_row,current_col), cell.y, cell.x + getDrawWidth(current_row,current_col), cell.y + height);
-			drawlabel(cell.x+0.4*parseInt(font_size),cell.y+0.2*parseInt(font_size),cell.value,font_size);
+				
+		}
+	}
+	for (current_row = 0; dataArray[current_row]!=null; current_row = current_row + 1) {
+		for(current_col = 0; dataArray[current_row][current_col]!=null; current_col = current_col + 1){
+			var cell = cellArray[current_row][current_col];
+			if (cell.mergeAlign == false)
+				drawlabel(cell.x+0.4*parseInt(font_size),cell.y+0.2*parseInt(font_size),cell.value,font_size);
+			else {
+				var totalwidth = getDrawWidth(current_row,current_col);
+				for (;dataArray[current_row][current_col+1]!=null && dataArray[current_row][current_col+1].indexOf("<-")!=-1;current_col = current_col + 1){
+					totalwidth = totalwidth + getDrawWidth(current_row,current_col+1);
+				}
+				drawtitle(cell.x + totalwidth/2, cell.y+0.2*parseInt(font_size),cell.value,font_size);
+			}
 		}
 	}
 }
