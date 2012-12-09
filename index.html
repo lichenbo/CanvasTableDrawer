@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title> CanvasTableDrawer</title>
+		<style type="text/css">
+			body {
+			text-align:center;
+			}
+			#tor {
+			text-align:left;
+			
+			}
+			#MyCanvas {
+				margin-left:auto;
+				margin-right:auto;
+				border-style:solid;
+				display:none;
+			}
+			#strtable {
+				height: 100px;
+				width: 400px;
+			
+			}
+		</style>
+		<script src="js/table.js"></script>
+		<script src="js/canvas.js"></script>
+		<script src="js/base64.js"></script>
+		<script src="js/canvas2image.js"></script>
+	</head>
+	<body>
+		<a href="https://github.com/lichenbo"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+		<h1>CanvasTableDrawer</h1>
+		<h2>By Chenbo.Li</h2>
+		<div>
+			<canvas id="MyCanvas" >Your browser does not support Canvas element. Please upgrade your browser asap.</canvas>
+			<img id="canvasimage" />
+		</div>
+		<div>
+			<TextArea name="strtable" id="strtable"></TextArea>
+			<br /> FontSize(Best performance betweeen 10 ~ 100):
+			<input type="text" id="size" value="20"/>
+			<button type="button" onclick ="buildTable(document.getElementById('strtable').value,document.getElementById('size').value);" id="inputId">Submit</button>
+		</div>
+		<p></p>
+		<div>
+			Use `RightClick -&gt; Save as` to save the image as png format.
+		</div>
+		<br />
+		<div>
+		A Brief Tutorial: <br />
+		1. Basic <br />
+		<img src = "pic/canvastabledrawer1.png"></img>
+		<br />
+		2. Merge <br />
+		Begin with a '^', you can merge the cell up, <br />
+		<img src = "pic/canvastabledrawer2.png"></img>
+		<br />
+		<img src = "pic/canvastabledrawer3.png"></img>
+		<br />
+		Begin with a '&lt;-' , you can merge the cell left, <br />
+		<img src = "pic/canvastabledrawer4.png"></img>
+		<br />
+		When the upward and leftward cells are merged, this cell will be merged in to the chunk. <br />
+		<img src = "pic/canvastabledrawer5.png"></img>
+		<br /> OR, <br />
+		<img src = "pic/canvastabledrawer6.png"></img>
+		</div>
+		<p>
+		Thanks to <a href="http://www.nihilogic.dk/labs/canvas2image/">nihilogic</a> for providing a converter from canvas to img file. This solves the problem of non-firefox browser.
+		
+		</p>
+	</body>
+</html>
