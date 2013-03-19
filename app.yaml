@@ -6,6 +6,9 @@ api_version: 1
 handlers:
 - url: /js
   static_dir: js
+
+- url: /pic
+  static_dir: pic
   
 - url: /
   static_files: index.html
