@@ -10,7 +10,14 @@ public class XlsCell {
     boolean left = true;
     boolean bottom = true;
     boolean right = true;
+    boolean merged = false;
 
+    public boolean isMerged() {
+        return merged;
+    }
+    public void setMerged(boolean merged) {
+        this.merged = merged;
+    }
     public boolean isTop() {
         return top;
     }
@@ -62,6 +69,9 @@ public class XlsCell {
     }
     public boolean mergeRight() {
         return content.contains("->");
+    }
+    public String getFormattedContent() {
+        return content.replace("^", "").replace("<-","").replace("->","");
     }
 
 

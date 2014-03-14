@@ -85,17 +85,28 @@ public class XlsCellContainer {
                     fCell.setBorder(Border.BOTTOM, BorderLineStyle.THIN);
                 }
                 if (curCell.isLeft()) {
+
                     fCell.setBorder(Border.LEFT, BorderLineStyle.THIN);
                 }
                 if (curCell.isRight()) {
                     fCell.setBorder(Border.RIGHT, BorderLineStyle.THIN);
                 }
+                if (!curCell.isMerged()) {
+                    sheet.addCell(new Label(i,j,curCell.getFormattedContent(),fCell));
+                }
                 if (curCell.mergeRight() && j < column-1 && cellContainer[i][j+1].mergeLeft()) {
-                    sheet.mergeCells(i,j,i,j+1);
+                    sheet.mergeCells(j,i,j+1,i);
+                    cellContainer[i][j+1].setMerged(true);
                 }
             }
         } catch (WriteException we) {
             we.printStackTrace();
+        }
+        try {
+            workbook.write();
+            workbook.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
