@@ -60,8 +60,9 @@ public class XlsCell {
     public boolean mergeLeft() {
         return content.contains("<-");
     }
-
-    public void draw() {
-        // TODO: draw each cell
+    public boolean mergeRight() {
+        return content.contains("->");
     }
+
+
 }
